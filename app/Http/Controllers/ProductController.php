@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
+
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 
@@ -17,7 +19,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::get(); //lay du lieu tu bang brand
+        $products = Product::get(); 
+      
 
         return view('product.index', ['products'=>$products]);
     }
@@ -47,6 +50,11 @@ class ProductController extends Controller
         $quantity = $request->input('quantity');
         $image = $request->file('image')->getClientOriginalName();
         $request->file('image')->storeAs('public/images', $image); 
+    //     $category_id = $request->input('category_id');
+    //     $product->category_id = $category_id;
+    //   $brand_id = $request->input('brand_id');
+    
+    //   $product->brand_id = $brand_id;
 
         //tao data de luu vao db
         $data = [
@@ -55,6 +63,8 @@ class ProductController extends Controller
             'quantity' => $quantity,
             'description' => $description,
             'image' => $image,
+            // 'brand' => $brand,
+            // 'category' => $category,
         ];
 
         Product::create($data); //tao ban ghi co du lieu la $data
@@ -69,9 +79,11 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showProduct($id)
     {
-        //
+        // $product = Product::find($id);
+        // $categories = Category::all();
+        // return view('product.index', compact('product', 'categories'));
     }
 
     /**

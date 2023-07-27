@@ -24,6 +24,9 @@
                     <th>Procuct Quantity</th>
                     <th>Procuct Image</th>
                     <th>Procuct Description</th>
+                    <th>Category ID</th>
+                    <th>Brand ID</th>
+
                     
                     <th width="280px">Action</th>
                 </tr>
@@ -39,6 +42,10 @@
                             <img src="{{asset('/storage/images/'.$product->image)}}" style="height: 50px;width:100px;">
                         </td>
                         <td>{{ $product->description }}</td>
+                        <td>{{ $product->category_id }}</td>
+                        <td>{{ $product->brand_id }}</td>
+
+                        
                        
                         <td>
                             <form action="{{ route('product.destroy',$product->id) }}" method="Post">

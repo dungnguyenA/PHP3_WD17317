@@ -18,8 +18,8 @@ class ProductFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'gender'=>'male',
             'price' => 10000,
+            'quantity' =>10,
             'image' => null,
             'description' => 'day la description', 
             'brand_id' => 1,

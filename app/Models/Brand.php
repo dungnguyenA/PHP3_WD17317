@@ -16,6 +16,7 @@ class Brand extends Model
         'description',
         'logo',
     ];
+    // protected $primaryKey = 'brand_id';
 
     public function products()
     {
