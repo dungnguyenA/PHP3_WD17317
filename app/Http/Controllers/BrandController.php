@@ -18,7 +18,7 @@ class BrandController extends Controller
     {
         $brands = Brand::get(); //lay du lieu tu bang brand
 
-        return view('brand.index', ['brands'=>$brands]);
+        return view('admin.brand.index', ['brands'=>$brands]);
     }
 
     /**
@@ -28,7 +28,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('brand.create');
+        return view('admin.brand.create');
     }
 
     /**
@@ -78,7 +78,7 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
-        return view('brand.edit', compact('brand'));
+        return view('admin.brand.edit', compact('brand'));
     }
 
     /**

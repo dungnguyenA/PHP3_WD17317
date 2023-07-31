@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Brand;
+
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -18,68 +20,68 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $products = Product::get(); 
-      
+        {
+            $products = Product::all();
+            $categories = Category::all();        
 
-        return view('product.index', ['products'=>$products]);
-    }
+            return view('admin.product.index',compact('products', 'categories'));
+        }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('product.create');
-    }
+        /**
+         * Show the form for creating a new resource.
+         *
+         * @return \Illuminate\Http\Response
+         */
+        public function create()
+        {
+            $categories = Category::all();
+            $brands = Brand::all();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreProductRequest $request)
-    {
+            return view('admin.product.create',compact('categories','brands'));
+        }
 
-        $name = $request->input('name'); 
-        $description = $request->input('description'); 
-        $price = $request->input('price'); 
-        $quantity = $request->input('quantity');
-        $image = $request->file('image')->getClientOriginalName();
-        $request->file('image')->storeAs('public/images', $image); 
-    //     $category_id = $request->input('category_id');
-    //     $product->category_id = $category_id;
-    //   $brand_id = $request->input('brand_id');
-    
-    //   $product->brand_id = $brand_id;
+        /**
+         * Store a newly created resource in storage.
+         *
+         * @param  \Illuminate\Http\Request  $request
+         * @return \Illuminate\Http\Response
+         */
+        public function store(StoreProductRequest $request)
+        {
 
-        //tao data de luu vao db
-        $data = [
-            'name' => $name,
-            'price' => $price,
-            'quantity' => $quantity,
-            'description' => $description,
-            'image' => $image,
-            // 'brand' => $brand,
-            // 'category' => $category,
-        ];
+            $name = $request->input('name'); 
+            $description = $request->input('description'); 
+            $price = $request->input('price'); 
+            $quantity = $request->input('quantity');
+            $image = $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('public/images', $image); 
+            $category_id = $request->input('category_id');
+            $brand_id = $request->input('brand_id');
 
-        Product::create($data); //tao ban ghi co du lieu la $data
-        
-        return redirect()->route('product.index')
-            ->with('success','Product has been created successfully.');
-    }
+            //tao data de luu vao db
+            $data = [
+                'name' => $name,
+                'price' => $price,
+                'quantity' => $quantity,
+                'description' => $description,
+                'image' => $image,
+                'brand_id' => $brand_id,
+                'category_id' => $category_id,
+            ];
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showProduct($id)
+            Product::create($data); //tao ban ghi co du lieu la $data
+            
+            return redirect()->route('product.index')
+                ->with('success','Product has been created successfully.');
+        }
+
+        /**
+         * Display the specified resource.
+         *
+         * @param  int  $id
+         * @return \Illuminate\Http\Response
+         */
+        public function show($id)
     {
         // $product = Product::find($id);
         // $categories = Category::all();
@@ -94,7 +96,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('product.edit', compact('product'));
+        $categories = Category::all();
+        $brands = Brand::all();
+        return view('admin.product.edit', compact('product','categories','brands'));
     }
 
     /**
